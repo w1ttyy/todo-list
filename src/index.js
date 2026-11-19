@@ -1,15 +1,19 @@
 import "./styles.css";
 import Todo from "./logic/todo.js";
 import Project from "./logic/project.js";
+import { init, addProject, getProjects } from "./logic/app.js";
 
-console.log("hello");
+init();
 
-const project = new Project("Projecet 1");
-console.log(project);
+console.log(getProjects().length);
+console.log(getProjects()[0].name);
 
-const todo = new Todo("Task 1", "toto je popis", "2026-11-21", "high");
-todo.toggleComplete();
-console.log(todo);
+init();
+console.log(getProjects().length);
 
-project.addTodo(todo);
-project.removeTodo(todo.id);
+const work = addProject("Work");
+console.log(getProjects().length);
+
+work.addTodo(new Todo("todo1", "popis 1", "dnes", "high"));
+
+console.log(work);
