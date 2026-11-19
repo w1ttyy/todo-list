@@ -1,30 +1,35 @@
 import "./styles.css";
-import Todo from "./logic/todo.js";
-import Project from "./logic/project.js";
-import { init, addProject, getProjects } from "./logic/app.js";
-import { saveProjects, loadProjects } from "./logic/storage.js";
+import {
+  init,
+  getProjects,
+  addProject,
+  addTodo,
+  removeTodo,
+  toggleTodo,
+} from "./logic/app.js";
 
 init();
 
-console.log(getProjects().length);
-console.log(getProjects()[0].name);
+// const work = addProject("Work");
+// addTodo(work.id, "Test todo", "popis", "2026-11-21", "high");
 
-init();
-console.log(getProjects().length);
+console.log("Počet projektov:", getProjects().length);
+console.log(
+  "Názvy:",
+  getProjects().map((project) => project.name),
+);
 
-const work = addProject("Work");
-console.log(getProjects().length);
+const testProject = addProject("Test");
+const testTodo = addTodo(
+  testProject.id,
+  "Todo na test",
+  "popis",
+  "2026-11-21",
+  "low",
+);
 
-work.addTodo(new Todo("todo1", "popis 1", "dnes", "high"));
+toggleTodo(testProject.id, testTodo.id);
+console.log("Completed po toggle:", testProject.getTodo(testTodo.id).completed); // true
 
-saveProjects(getProjects());
-
-console.log(work);
-
-const loaded = loadProjects();
-console.log(loaded.length);
-console.log(loaded[0].name);
-
-loaded[1].todos[0].toggleComplete();
-console.log(loaded[1].todos[0].completed); // čakáš true
-console.log(loaded[1].id === work.id); // čakáš true
+removeTodo(testProject.id, testTodo.id);
+console.log("Todos po remove:", testProject.todos.length); // 0
