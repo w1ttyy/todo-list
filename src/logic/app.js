@@ -18,6 +18,7 @@ export function addProject(name) {
 
 export function init() {
   if (projects.length === 0) {
+    // addProject("Inbox");
     const inbox = new Project("Inbox");
     projects.push(inbox);
   }
