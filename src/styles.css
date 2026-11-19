@@ -1,3 +1,56 @@
+:root {
+    /* Sidebar */
+    --color-sidebar: #03203d;
+    --color-sidebar-end: #0a3a66;
+    /* koniec gradientu */
+    --color-sidebar-text: #f7f7f5;
+    --color-sidebar-muted: rgba(247, 247, 245, 0.6);
+    --color-sidebar-active: rgba(99, 156, 197, 0.25);
+
+    /* Hlavná plocha */
+    --color-bg: #f7f7f5;
+    /* snow */
+    --color-surface: #ffffff;
+    /* karty */
+    --color-border: #e3e8ee;
+    --color-text: #03203d;
+    /* tmavomodrý text */
+    --color-text-muted: #5b6b7b;
+    /* dátumy, popisky */
+
+    /* Akcenty */
+    --color-accent: #639cc5;
+    --color-danger: #eb2f33;
+
+    /* Priority */
+    --color-priority-low: #639cc5;
+    --color-priority-medium: #f2a541;
+    --color-priority-high: #eb2f33;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: gray;
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#sidebar, #content {
+    padding: 24px;
+}
+
+#sidebar {
+    background: linear-gradient(180deg, var(--color-sidebar), var(--color-sidebar-end));
+    color: var(--color-sidebar-text);
+}
+
+#content {
+    background-color: var(--color-bg);
+    color: var(--color-text);
 }
