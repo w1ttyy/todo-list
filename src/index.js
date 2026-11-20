@@ -42,4 +42,14 @@ todoList.addEventListener("click", (event) => {
   render();
 });
 
+const addProjectBtn = document.querySelector("#add-project-btn");
+const projectForm = document.querySelector("#project-form");
+const projectFormName = document.querySelector("#project-name");
+
+addProjectBtn.addEventListener("click", () => {
+  projectForm.hidden = false;
+  addProjectBtn.hidden = true;
+  projectFormName.focus();
+});
+
 render();

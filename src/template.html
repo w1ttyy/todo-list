@@ -8,8 +8,19 @@
   <body>
     <aside id="sidebar">
       <h2>Projects</h2>
-      <button id="add-project-btn" type="button">Add Project</button>
       <ul id="project-list"></ul>
+      <button id="add-project-btn" type="button">Add Project</button>
+      <form id="project-form" hidden>
+        <input
+          type="text"
+          name="Project name"
+          placeholder="Project name"
+          id="project-name"
+          required
+        />
+        <button type="submit">Add</button>
+        <button type="button" id="cancel-project-btn">Cancel</button>
+      </form>
     </aside>
     <main id="content">
       <h1 id="project-title">Inbox</h1>
