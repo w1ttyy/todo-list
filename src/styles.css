@@ -54,3 +54,27 @@ body {
     background-color: var(--color-bg);
     color: var(--color-text);
 }
+
+#project-list {
+    list-style: none;
+}
+
+#project-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#project-list li:hover {
+    background-color: rgba(247, 247, 245, 0.08);
+}
+
+#project-list li.active {
+    background-color: var(--color-sidebar-active);
+}
+
+#project-list li span:last-child {
+    color: var(--color-sidebar-muted);
+}
