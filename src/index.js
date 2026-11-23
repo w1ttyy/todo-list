@@ -45,11 +45,34 @@ todoList.addEventListener("click", (event) => {
 const addProjectBtn = document.querySelector("#add-project-btn");
 const projectForm = document.querySelector("#project-form");
 const projectFormName = document.querySelector("#project-name");
+const cancelFormBtn = document.querySelector("#cancel-project-btn");
 
 addProjectBtn.addEventListener("click", () => {
   projectForm.hidden = false;
   addProjectBtn.hidden = true;
   projectFormName.focus();
 });
+
+projectForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const name = projectFormName.value.trim();
+  if (!name) return;
+
+  const project = addProject(name);
+  activeProjectId = project.id;
+
+  hideProjectForm();
+
+  render();
+});
+
+function hideProjectForm() {
+  projectForm.reset();
+  projectForm.hidden = true;
+  addProjectBtn.hidden = false;
+}
+
+cancelFormBtn.addEventListener("click", hideProjectForm);
 
 render();
