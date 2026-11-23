@@ -10,14 +10,16 @@ import {
 } from "./logic/app.js";
 import { renderProjects } from "./ui/sidebar.js";
 import { renderTodos } from "./ui/todoList.js";
+import Todo from "./logic/todo.js";
 
 init();
 
 let activeProjectId = getProjects()[0].id;
+let expandedTodoId = null;
 
 function render() {
   renderProjects(getProjects(), activeProjectId);
-  renderTodos(getProject(activeProjectId));
+  renderTodos(getProject(activeProjectId), expandedTodoId);
 }
 
 const projectList = document.querySelector("#project-list");
@@ -28,17 +30,37 @@ projectList.addEventListener("click", (event) => {
   if (!li) return;
 
   activeProjectId = li.dataset.id;
+  expandedTodoId = null;
   render();
 });
 
 const todoList = document.querySelector("#todo-list");
 
 todoList.addEventListener("click", (event) => {
-  const check = event.target.closest(".todo-check");
-  if (!check) return;
+  const card = event.target.closest(".todo-card");
+  if (!card) return;
 
-  const card = check.closest(".todo-card");
-  toggleTodo(activeProjectId, card.dataset.id);
+  const todoId = card.dataset.id;
+
+  if (event.target.closest(".todo-check")) {
+    toggleTodo(activeProjectId, todoId);
+    render();
+    return;
+  }
+
+  if (event.target.closest(".todo-delete")) {
+    removeTodo(activeProjectId, todoId);
+    expandedTodoId = null;
+    render();
+    return;
+  }
+
+  if (todoId === expandedTodoId) {
+    expandedTodoId = null;
+  } else {
+    expandedTodoId = todoId;
+  }
+
   render();
 });
 

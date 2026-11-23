@@ -1,4 +1,4 @@
-export function renderTodos(project) {
+export function renderTodos(project, expandedTodoId) {
   const title = document.querySelector("#project-title");
   title.textContent = project.name;
 
@@ -17,6 +17,7 @@ export function renderTodos(project) {
     check.setAttribute("aria-label", "Toggle complete");
 
     const info = document.createElement("div");
+    info.classList.add("todo-info");
     const todoTitle = document.createElement("span");
     todoTitle.textContent = todo.title;
     const date = document.createElement("span");
@@ -29,6 +30,29 @@ export function renderTodos(project) {
     }
 
     li.append(check, info);
+
+    if (todo.id === expandedTodoId) {
+      li.classList.add("expanded");
+
+      const todoDetails = document.createElement("div");
+      todoDetails.classList.add("todo-details");
+
+      const todoDescription = document.createElement("p");
+      todoDescription.textContent = todo.description;
+
+      const todoPriority = document.createElement("p");
+      todoPriority.textContent = "Priority: " + todo.priority;
+
+      const todoDeleteBtn = document.createElement("button");
+      todoDeleteBtn.textContent = "Delete";
+      todoDeleteBtn.type = "button";
+      todoDeleteBtn.classList.add("todo-delete");
+
+      todoDetails.append(todoDescription, todoPriority, todoDeleteBtn);
+
+      li.append(todoDetails);
+    }
+
     list.append(li);
   });
 }
