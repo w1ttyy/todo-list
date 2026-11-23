@@ -1,4 +1,12 @@
-export function renderTodos(project, expandedTodoId) {
+export function renderTodos(project, expandedTodoId, editingTodoId) {
+  if (todo.id === editingTodoId) {
+    const editForm = document.createElement("form");
+    editForm.classList.add("todo-edit-form");
+
+    const titleEdit = document.createElement("input");
+    titleEdit.type = "text";
+  }
+
   const title = document.querySelector("#project-title");
   title.textContent = project.name;
 

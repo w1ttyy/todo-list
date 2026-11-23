@@ -25,7 +25,6 @@ export function init() {
   if (projects.length === 0) {
     addProject("Inbox");
   }
-  save();
 }
 
 function save() {
@@ -49,5 +48,22 @@ export function removeTodo(projectId, todoId) {
 export function toggleTodo(projectId, todoId) {
   const project = getProject(projectId);
   project.getTodo(todoId).toggleComplete();
+  save();
+}
+
+export function updateTodo(
+  projectId,
+  todoId,
+  title,
+  description,
+  dueDate,
+  priority,
+) {
+  const project = getProject(projectId);
+  const todo = project.getTodo(todoId);
+  todo.title = title;
+  todo.description = description;
+  todo.dueDate = dueDate;
+  todo.priority = priority;
   save();
 }
