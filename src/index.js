@@ -42,10 +42,12 @@ todoList.addEventListener("click", (event) => {
   render();
 });
 
+// PROJECT FORM ====================================================
+
 const addProjectBtn = document.querySelector("#add-project-btn");
 const projectForm = document.querySelector("#project-form");
 const projectFormName = document.querySelector("#project-name");
-const cancelFormBtn = document.querySelector("#cancel-project-btn");
+const cancelProjectFormBtn = document.querySelector("#cancel-project-btn");
 
 addProjectBtn.addEventListener("click", () => {
   projectForm.hidden = false;
@@ -73,6 +75,47 @@ function hideProjectForm() {
   addProjectBtn.hidden = false;
 }
 
-cancelFormBtn.addEventListener("click", hideProjectForm);
+cancelProjectFormBtn.addEventListener("click", hideProjectForm);
+
+// TASK FORM ====================================================
+
+const addTaskBtn = document.querySelector("#add-task-btn");
+const taskForm = document.querySelector("#task-form");
+const taskFormTitle = document.querySelector("#task-title");
+const taskFormDescription = document.querySelector("#task-description");
+const taskFormDueDate = document.querySelector("#task-due-date");
+const taskFormPriority = document.querySelector("#task-priority");
+const taskFormCancelBtn = document.querySelector("#cancel-task-btn");
+
+function hideTaskForm() {
+  taskForm.reset();
+  taskForm.hidden = true;
+  addTaskBtn.hidden = false;
+}
+
+addTaskBtn.addEventListener("click", () => {
+  taskForm.hidden = false;
+  addTaskBtn.hidden = true;
+  taskFormTitle.focus();
+});
+
+taskForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const name = taskFormTitle.value.trim();
+  if (!name) return;
+
+  const description = taskFormDescription.value.trim();
+  const dueDate = taskFormDueDate.value;
+  const priority = taskFormPriority.value;
+
+  addTodo(activeProjectId, name, description, dueDate, priority);
+
+  hideTaskForm();
+
+  render();
+});
+
+taskFormCancelBtn.addEventListener("click", hideTaskForm);
 
 render();
