@@ -7,6 +7,7 @@ import {
   removeTodo,
   toggleTodo,
   getProject,
+  updateTodo,
 } from "./logic/app.js";
 import { renderProjects } from "./ui/sidebar.js";
 import { renderTodos } from "./ui/todoList.js";
@@ -15,7 +16,7 @@ init();
 
 let activeProjectId = getProjects()[0].id;
 let expandedTodoId = null;
-let editingTodoId = "d25baa6f-7349-4292-a52c-4d6f7655b6cf";
+let editingTodoId = null;
 function render() {
   renderProjects(getProjects(), activeProjectId);
   renderTodos(getProject(activeProjectId), expandedTodoId, editingTodoId);
@@ -30,6 +31,7 @@ projectList.addEventListener("click", (event) => {
 
   activeProjectId = li.dataset.id;
   expandedTodoId = null;
+  editingTodoId = null;
   render();
 });
 
@@ -40,6 +42,21 @@ todoList.addEventListener("click", (event) => {
   if (!card) return;
 
   const todoId = card.dataset.id;
+
+  if (event.target.closest(".todo-edit-form")) {
+    if (event.target.closest(".todo-edit-cancel")) {
+      editingTodoId = null;
+      render();
+      return;
+    }
+    return;
+  }
+
+  if (event.target.closest(".todo-edit")) {
+    editingTodoId = todoId;
+    render();
+    return;
+  }
 
   if (event.target.closest(".todo-check")) {
     toggleTodo(activeProjectId, todoId);
@@ -60,6 +77,27 @@ todoList.addEventListener("click", (event) => {
     expandedTodoId = todoId;
   }
 
+  render();
+});
+
+todoList.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const form = event.target;
+
+  const card = form.closest(".todo-card");
+  const todoId = card.dataset.id;
+
+  const title = form.elements.title.value.trim();
+  if (!title) return;
+
+  const description = form.elements.description.value.trim();
+  const dueDate = form.elements.dueDate.value;
+  const priority = form.elements.priority.value;
+
+  updateTodo(activeProjectId, todoId, title, description, dueDate, priority);
+
+  editingTodoId = null;
   render();
 });
 
