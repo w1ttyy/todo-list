@@ -10,16 +10,15 @@ import {
 } from "./logic/app.js";
 import { renderProjects } from "./ui/sidebar.js";
 import { renderTodos } from "./ui/todoList.js";
-import Todo from "./logic/todo.js";
 
 init();
 
 let activeProjectId = getProjects()[0].id;
 let expandedTodoId = null;
-
+let editingTodoId = "d25baa6f-7349-4292-a52c-4d6f7655b6cf";
 function render() {
   renderProjects(getProjects(), activeProjectId);
-  renderTodos(getProject(activeProjectId), expandedTodoId);
+  renderTodos(getProject(activeProjectId), expandedTodoId, editingTodoId);
 }
 
 const projectList = document.querySelector("#project-list");

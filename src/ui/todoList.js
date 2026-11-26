@@ -1,12 +1,4 @@
 export function renderTodos(project, expandedTodoId, editingTodoId) {
-  if (todo.id === editingTodoId) {
-    const editForm = document.createElement("form");
-    editForm.classList.add("todo-edit-form");
-
-    const titleEdit = document.createElement("input");
-    titleEdit.type = "text";
-  }
-
   const title = document.querySelector("#project-title");
   title.textContent = project.name;
 
@@ -39,7 +31,62 @@ export function renderTodos(project, expandedTodoId, editingTodoId) {
 
     li.append(check, info);
 
-    if (todo.id === expandedTodoId) {
+    if (todo.id === editingTodoId) {
+      const editForm = document.createElement("form");
+      editForm.classList.add("todo-edit-form");
+
+      const titleEdit = document.createElement("input");
+      titleEdit.type = "text";
+      titleEdit.name = "title";
+      titleEdit.ariaLabel = "Task name";
+      titleEdit.required = true;
+      titleEdit.value = todo.title;
+
+      const descriptionEdit = document.createElement("textarea");
+      descriptionEdit.name = "description";
+      descriptionEdit.ariaLabel = "Description";
+      descriptionEdit.value = todo.description;
+
+      const dueDateEdit = document.createElement("input");
+      dueDateEdit.type = "date";
+      dueDateEdit.name = "dueDate";
+      dueDateEdit.ariaLabel = "Due date";
+      dueDateEdit.value = todo.dueDate;
+
+      const priorityEdit = document.createElement("select");
+      priorityEdit.name = "priority";
+      priorityEdit.ariaLabel = "Priority";
+
+      const priorityOptions = ["low", "medium", "high"];
+      priorityOptions.forEach((option) => {
+        const priorityOption = document.createElement("option");
+        priorityOption.value = option;
+        priorityOption.textContent = option;
+        if (option === todo.priority) {
+          priorityOption.selected = true;
+        }
+        priorityEdit.append(priorityOption);
+      });
+
+      const saveBtn = document.createElement("button");
+      saveBtn.textContent = "Save";
+      saveBtn.type = "submit";
+
+      const cancelBtn = document.createElement("button");
+      cancelBtn.textContent = "Cancel";
+      cancelBtn.type = "button";
+      cancelBtn.classList.add("todo-edit-cancel");
+
+      editForm.append(
+        titleEdit,
+        descriptionEdit,
+        dueDateEdit,
+        priorityEdit,
+        saveBtn,
+        cancelBtn,
+      );
+      li.append(editForm);
+    } else if (todo.id === expandedTodoId) {
       li.classList.add("expanded");
 
       const todoDetails = document.createElement("div");
@@ -51,12 +98,22 @@ export function renderTodos(project, expandedTodoId, editingTodoId) {
       const todoPriority = document.createElement("p");
       todoPriority.textContent = "Priority: " + todo.priority;
 
+      const todoEditBtn = document.createElement("button");
+      todoEditBtn.textContent = "Edit";
+      todoEditBtn.type = "button";
+      todoEditBtn.classList.add("todo-edit");
+
       const todoDeleteBtn = document.createElement("button");
       todoDeleteBtn.textContent = "Delete";
       todoDeleteBtn.type = "button";
       todoDeleteBtn.classList.add("todo-delete");
 
-      todoDetails.append(todoDescription, todoPriority, todoDeleteBtn);
+      todoDetails.append(
+        todoDescription,
+        todoPriority,
+        todoEditBtn,
+        todoDeleteBtn,
+      );
 
       li.append(todoDetails);
     }
