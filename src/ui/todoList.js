@@ -1,3 +1,5 @@
+import { format, parseISO } from "date-fns";
+
 export function renderTodos(project, expandedTodoId, editingTodoId) {
   const title = document.querySelector("#project-title");
   title.textContent = project.name;
@@ -21,7 +23,11 @@ export function renderTodos(project, expandedTodoId, editingTodoId) {
     const todoTitle = document.createElement("span");
     todoTitle.textContent = todo.title;
     const date = document.createElement("span");
-    date.textContent = todo.dueDate;
+    if (todo.dueDate) {
+      const dateString = parseISO(todo.dueDate);
+      const dateFormated = format(dateString, "d MMM");
+      date.textContent = dateFormated;
+    }
     info.append(todoTitle, date);
 
     li.classList.add(`priority-${todo.priority}`);
