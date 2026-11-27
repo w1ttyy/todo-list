@@ -4,11 +4,11 @@
   "private": true,
   "description": "",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --mode production --no-devtool",
     "dev": "webpack serve"
   },
   "keywords": [],
-  "author": "",
+  "author": "w1tty",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
