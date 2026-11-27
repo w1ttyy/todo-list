@@ -92,11 +92,26 @@ export function renderTodos(project, expandedTodoId, editingTodoId) {
       const todoDetails = document.createElement("div");
       todoDetails.classList.add("todo-details");
 
+      const todoDescriptionDiv = document.createElement("div");
+      todoDescriptionDiv.classList.add("todo-description");
+
+      const todoDescriptionSpan = document.createElement("span");
+      todoDescriptionSpan.classList.add("todo-label");
+      todoDescriptionSpan.textContent = "Description";
+
       const todoDescription = document.createElement("p");
       todoDescription.textContent = todo.description;
 
-      const todoPriority = document.createElement("p");
-      todoPriority.textContent = "Priority: " + todo.priority;
+      if (!todo.description) {
+        todoDescription.textContent = "No descirption";
+        todoDescription.classList.add("is-empty");
+      }
+      todoDescriptionDiv.append(todoDescriptionSpan, todoDescription);
+
+      const todoPriority = document.createElement("span");
+      todoPriority.classList.add("priority-badge");
+      todoPriority.classList.add(`badge-${todo.priority}`);
+      todoPriority.textContent = todo.priority + " priority";
 
       const todoEditBtn = document.createElement("button");
       todoEditBtn.textContent = "Edit";
@@ -108,12 +123,11 @@ export function renderTodos(project, expandedTodoId, editingTodoId) {
       todoDeleteBtn.type = "button";
       todoDeleteBtn.classList.add("todo-delete");
 
-      todoDetails.append(
-        todoDescription,
-        todoPriority,
-        todoEditBtn,
-        todoDeleteBtn,
-      );
+      const todoActions = document.createElement("div");
+      todoActions.classList.add("todo-actions");
+      todoActions.append(todoEditBtn, todoDeleteBtn);
+
+      todoDetails.append(todoDescriptionDiv, todoPriority, todoActions);
 
       li.append(todoDetails);
     }

@@ -1,39 +1,42 @@
+/* ===== 1. VARIABLES ===== */
 :root {
     /* Sidebar */
     --color-sidebar: #03203d;
     --color-sidebar-end: #0a3a66;
-    /* koniec gradientu */
     --color-sidebar-text: #f7f7f5;
     --color-sidebar-muted: rgba(247, 247, 245, 0.6);
     --color-sidebar-active: rgba(99, 156, 197, 0.25);
 
-    /* Hlavná plocha */
+    /* Main area */
     --color-bg: #f7f7f5;
-    /* snow */
     --color-surface: #ffffff;
-    /* karty */
     --color-border: #e3e8ee;
     --color-text: #03203d;
-    /* tmavomodrý text */
     --color-text-muted: #5b6b7b;
-    /* dátumy, popisky */
 
-    /* Akcenty */
+    /* Accents */
     --color-accent: #639cc5;
     --color-danger: #eb2f33;
 
-    /* Priority */
+    /* Priorities */
     --color-priority-low: #639cc5;
     --color-priority-medium: #f2a541;
     --color-priority-high: #eb2f33;
 }
 
+/* ===== 2. RESET ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* NEW: hidden must win over display: flex */
+[hidden] {
+    display: none !important;
+}
+
+/* ===== 3. BASE ELEMENTS ===== */
 body {
     display: grid;
     grid-template-columns: 260px minmax(0, 1fr);
@@ -41,7 +44,56 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#sidebar, #content {
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+}
+
+/* NEW: primary action (Save, Add) */
+button[type="submit"] {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+}
+
+/* NEW: text fields */
+input,
+textarea,
+select {
+    padding: 6px 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* NEW: visible focus for keyboard users */
+button:focus-visible,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
+}
+
+/* ===== 4. LAYOUT ===== */
+#sidebar,
+#content {
     padding: 24px;
 }
 
@@ -55,8 +107,10 @@ body {
     color: var(--color-text);
 }
 
+/* ===== 5. SIDEBAR: PROJECTS ===== */
 #project-list {
     list-style: none;
+    margin: 12px 0;
 }
 
 #project-list li {
@@ -79,36 +133,45 @@ body {
     color: var(--color-sidebar-muted);
 }
 
+/* NEW: "+ Add project" / "+ Add task" as text buttons */
+#add-project-btn,
+#add-task-btn {
+    color: var(--color-accent);
+    padding: 8px 12px;
+}
+
+/* NEW: project form in sidebar */
+#project-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#project-form div,
+#project-form button[type="button"] {
+    color: var(--color-sidebar-text);
+}
+
+/* ===== 6. TODO LIST ===== */
 #todo-list {
     display: flex;
     flex-direction: column;
     gap: 8px;
     list-style: none;
-
     margin: 16px 0;
 }
 
 .todo-card {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 12px;
+    padding: 12px 16px;
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-left: 4px solid;
     border-radius: 8px;
-    padding: 12px 16px;
-    flex-wrap: wrap;
     cursor: pointer;
-}
-
-.todo-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.todo-info span:last-child {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
 }
 
 .priority-high {
@@ -126,13 +189,29 @@ body {
 .todo-check {
     width: 18px;
     height: 18px;
+    padding: 0;
+    /* NEW: override base button padding */
     border: 2px solid var(--color-accent);
     border-radius: 50%;
     background: transparent;
-    cursor: pointer;
     flex-shrink: 0;
 }
 
+.todo-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-info span:last-child {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.todo-info span:first-child {
+    font-weight: 600;
+}
+
+/* Completed */
 .completed {
     opacity: 0.55;
 }
@@ -145,6 +224,7 @@ body {
     background-color: var(--color-accent);
 }
 
+/* Details */
 .todo-details {
     display: flex;
     flex-direction: column;
@@ -155,7 +235,98 @@ body {
     padding-left: 30px;
 }
 
+.todo-description {
+    align-self: stretch;
+    background-color: var(--color-bg);
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.todo-label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2px;
+}
+
+.todo-description .is-empty {
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+.priority-badge {
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 999px;
+    text-transform: capitalize;
+}
+
+.badge-high {
+    background-color: #fce5e6;
+    color: #8a1316;
+}
+
+.badge-medium {
+    background-color: #fdf0dc;
+    color: #7a4a05;
+}
+
+.badge-low {
+    background-color: #e5eff7;
+    color: #1f4e70;
+}
+
+.todo-actions {
+    display: flex;
+    gap: 20px;
+}
+
+/* NEW: Edit and Delete buttons side by side feel */
+.todo-edit {
+    color: var(--color-accent);
+    padding: 4px 0;
+}
+
 .todo-delete {
     color: var(--color-danger);
-    cursor: pointer;
+    font-weight: 600;
+    padding: 4px 0;
+}
+
+/* ===== 7. FORMS IN CONTENT ===== */
+/* NEW: shared look for add-task and edit forms */
+#task-form,
+.todo-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 480px;
+}
+
+#task-form {
+    padding: 16px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+}
+
+.todo-edit-form {
+    flex-basis: 100%;
+    margin-top: 8px;
+    padding-left: 30px;
+    cursor: default;
+}
+
+/* NEW: Cancel buttons as secondary */
+#task-form button[type="button"],
+.todo-edit-cancel {
+    color: var(--color-text-muted);
+}
+
+/* NEW: put Save and Cancel next to each other */
+#task-form button,
+.todo-edit-form button {
+    align-self: flex-start;
 }
