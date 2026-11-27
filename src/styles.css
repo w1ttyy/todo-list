@@ -31,7 +31,6 @@
     box-sizing: border-box;
 }
 
-/* NEW: hidden must win over display: flex */
 [hidden] {
     display: none !important;
 }
@@ -60,13 +59,11 @@ button {
     color: inherit;
 }
 
-/* NEW: primary action (Save, Add) */
 button[type="submit"] {
     background-color: var(--color-text);
     color: var(--color-bg);
 }
 
-/* NEW: text fields */
 input,
 textarea,
 select {
@@ -82,7 +79,6 @@ textarea {
     min-height: 60px;
 }
 
-/* NEW: visible focus for keyboard users */
 button:focus-visible,
 input:focus,
 textarea:focus,
@@ -133,23 +129,25 @@ select:focus {
     color: var(--color-sidebar-muted);
 }
 
-/* NEW: "+ Add project" / "+ Add task" as text buttons */
 #add-project-btn,
 #add-task-btn {
     color: var(--color-accent);
     padding: 8px 12px;
 }
 
-/* NEW: project form in sidebar */
 #project-form {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-#project-form div,
 #project-form button[type="button"] {
     color: var(--color-sidebar-text);
+}
+
+#project-form button[type="submit"] {
+    background-color: var(--color-accent);
+    color: var(--color-sidebar);
 }
 
 /* ===== 6. TODO LIST ===== */
@@ -190,7 +188,6 @@ select:focus {
     width: 18px;
     height: 18px;
     padding: 0;
-    /* NEW: override base button padding */
     border: 2px solid var(--color-accent);
     border-radius: 50%;
     background: transparent;
@@ -283,7 +280,6 @@ select:focus {
     gap: 20px;
 }
 
-/* NEW: Edit and Delete buttons side by side feel */
 .todo-edit {
     color: var(--color-accent);
     padding: 4px 0;
@@ -296,7 +292,6 @@ select:focus {
 }
 
 /* ===== 7. FORMS IN CONTENT ===== */
-/* NEW: shared look for add-task and edit forms */
 #task-form,
 .todo-edit-form {
     display: flex;
@@ -319,13 +314,11 @@ select:focus {
     cursor: default;
 }
 
-/* NEW: Cancel buttons as secondary */
 #task-form button[type="button"],
 .todo-edit-cancel {
     color: var(--color-text-muted);
 }
 
-/* NEW: put Save and Cancel next to each other */
 #task-form button,
 .todo-edit-form button {
     align-self: flex-start;

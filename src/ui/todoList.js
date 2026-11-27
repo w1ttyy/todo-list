@@ -24,9 +24,9 @@ export function renderTodos(project, expandedTodoId, editingTodoId) {
     todoTitle.textContent = todo.title;
     const date = document.createElement("span");
     if (todo.dueDate) {
-      const dateString = parseISO(todo.dueDate);
-      const dateFormated = format(dateString, "d MMM");
-      date.textContent = dateFormated;
+      const parsedDate = parseISO(todo.dueDate);
+      const formatedDate = format(parsedDate, "d MMM");
+      date.textContent = formatedDate;
     }
     info.append(todoTitle, date);
 
